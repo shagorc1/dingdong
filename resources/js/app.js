@@ -1,1 +1,1 @@
-require('./bootstrap');
+require('./pages/categories');

@@ -1,0 +1,22 @@
+<?php
+
+use Illuminate\Database\Seeder;
+use App\Models\States;
+
+class StatesSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        States::create([
+            'name' => 'Jalisco',
+            'active' => 1,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+    }
+}

@@ -16,3 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+$router->group(['prefix' => 'categorias'], function($router) {
+    $router->get('', 'CategoriesController@index')->name('categories-index');
+    $router->get('nueva', 'CategoriesController@create')->name('categories-create');
+    $router->get('paginado', 'CategoriesController@paginate')->name('categories-');
+});
