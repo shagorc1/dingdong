@@ -76,7 +76,7 @@
             @yield('content')
         </main>
          <!-- jQuery -->
-         <script src="{{ asset('storage/plugins/jquery/jquery.min.js') }}"></script>
+         <script src="{{ asset('libraries/plugins/jquery/jquery.min.js') }}"></script>
     </div>
 </body>
 </html>

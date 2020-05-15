@@ -10,13 +10,13 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('storage/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libraries/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('storage/dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libraries/dist/css/adminlte.min.css') }}">
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="{{ asset('storage/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('libraries/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
@@ -63,7 +63,7 @@
                 <a href="#" class="dropdown-item">
                     <!-- Message Start -->
                     <div class="media">
-                    <img src="{{ asset('storage/dist/img/user1-128x128.jpg') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                    <img src="{{ asset('libraries/dist/img/user1-128x128.jpg') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                     <div class="media-body">
                         <h3 class="dropdown-item-title">
                         Brad Diesel
@@ -79,7 +79,7 @@
                 <a href="#" class="dropdown-item">
                     <!-- Message Start -->
                     <div class="media">
-                    <img src="{{ asset('storage/dist/img/user8-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                    <img src="{{ asset('libraries/dist/img/user8-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
                     <div class="media-body">
                         <h3 class="dropdown-item-title">
                         John Pierce
@@ -95,7 +95,7 @@
                 <a href="#" class="dropdown-item">
                     <!-- Message Start -->
                     <div class="media">
-                    <img src="{{ asset('storage/dist/img/user3-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                    <img src="{{ asset('libraries/dist/img/user3-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
                     <div class="media-body">
                         <h3 class="dropdown-item-title">
                         Nora Silvester
@@ -158,20 +158,20 @@
         <!-- /.control-sidebar -->
         </div>
         <!-- jQuery -->
-        <script src="{{ asset('storage/plugins/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('libraries/plugins/jquery/jquery.min.js') }}"></script>
         <!-- jQuery UI 1.11.4 -->
-        <script src="{{ asset('storage/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('libraries/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script>
-        $.widget.bridge('storage/uibutton', $.ui.button)
+        $.widget.bridge('libraries/uibutton', $.ui.button)
         </script>
         <!-- Bootstrap 4 -->
-        <script src="{{ asset('storage/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('storage/plugins/moment/moment.min.js') }}"></script>
+        <script src="{{ asset('libraries/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('libraries/plugins/moment/moment.min.js') }}"></script>
         <!-- overlayScrollbars -->
-        <script src="{{ asset('storage/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+        <script src="{{ asset('libraries/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
         <!-- AdminLTE App -->
-        <script src="{{ asset('storage/dist/js/adminlte.js') }}"></script>
+        <script src="{{ asset('libraries/dist/js/adminlte.js') }}"></script>
         @yield('js-scripts')
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>

@@ -18,9 +18,9 @@
 @endsection
 
 @section('js-scripts')
-<script src="{{ asset('storage/plugins/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('libraries/plugins/datatables/datatables.min.js') }}"></script>
 @endsection
 
 @section('css-scripts')
-<link rel="stylesheet" href="{{ asset('storage/plugins/datatables/datatables.css') }}">
+<link rel="stylesheet" href="{{ asset('libraries/plugins/datatables/datatables.css') }}">
 @endsection
