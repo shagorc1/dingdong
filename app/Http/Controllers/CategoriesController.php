@@ -124,6 +124,11 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cate = Categories::find($id);
+        $name = $cate->name;
+        $cate->active = 0;
+        $cate->save();
+
+        return redirect()->route('categories-index')->with('success', 'Categoria "' . $name . '" eliminada');
     }
 }

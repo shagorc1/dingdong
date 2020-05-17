@@ -28,4 +28,5 @@ $router->group(['prefix' => 'categorias'], function($router) {
     $router->get('paginado', 'CategoriesController@paginate')->name('categories-paginate');
     $router->post('guardado', 'CategoriesController@store')->name('categories-store');
     $router->put('actualizado/{category}', 'CategoriesController@update')->name('categories-update');
+    $router->get('eliminado/{id}', 'CategoriesController@destroy')->name('categories-delete');
 });

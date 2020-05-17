@@ -108,6 +108,7 @@ var URLS = __webpack_require__(/*! ../urls */ "./resources/js/urls.js"); // Cate
 
 
 if ($('#categories-list').length > 0) {
+  // Categories data table
   $('#list').DataTable({
     'processing': true,
     'serverSide': true,
@@ -124,7 +125,7 @@ if ($('#categories-list').length > 0) {
     }, {
       'data': 'options',
       'render': function render(data, type, row, meta) {
-        return "<div class=\"btn-group\">\n                            <a href=\"".concat(URLS.CATEGORY, "/editar/").concat(row.id, "\" class=\"btn btn-info\"><i class=\"right fas fa-edit\"></i></a>\n                            <a class=\"btn btn-danger\"><i class=\"right fas fa-trash\"></i></a>\n                        </div>");
+        return "<div class=\"btn-group\">\n                            <a href=\"".concat(URLS.CATEGORY, "/editar/").concat(row.id, "\" class=\"btn btn-info\"><i class=\"right fas fa-edit\"></i></a>\n                            <a class=\"btn-delete btn btn-danger\" data-toggle=\"modal\" data-target=\"#myModal\" data-id=\"").concat(row.id, "\" data-name=\"").concat(row.name, "\"><i class=\"right fas fa-trash\"></i></a>\n                        </div>");
       }
     }],
     'language': {
@@ -134,6 +135,17 @@ if ($('#categories-list').length > 0) {
       'infoEmpty': 'No records available',
       'infoFiltered': '(filtered from _MAX_ total records)'
     }
+  }); // Button delete
+
+  $('#list').on('click', '.btn-delete', function (evt) {
+    var id = evt.currentTarget.getAttribute('data-id');
+    var name = evt.currentTarget.getAttribute('data-name');
+    var urlForm = "/".concat(URLS.CATEGORY, "/eliminado/").concat(id);
+    $('#cateName').html(name);
+    $('#delete-form').attr('action', urlForm);
+    $('#btn-submit-delete').click(function (e) {
+      $('#delete-form').submit();
+    });
   });
 } // Categories Edit
 
