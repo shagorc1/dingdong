@@ -23,6 +23,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 $router->group(['prefix' => 'categorias'], function($router) {
     $router->get('', 'CategoriesController@index')->name('categories-index');
-    $router->get('nueva', 'CategoriesController@create')->name('categories-create');
-    $router->get('paginado', 'CategoriesController@paginate')->name('categories-');
+    $router->get('editar/{id}', 'CategoriesController@edit')->name('categories-edit');
+    $router->get('nuevo', 'CategoriesController@create')->name('categories-create');
+    $router->get('paginado', 'CategoriesController@paginate')->name('categories-paginate');
+    $router->post('guardado', 'CategoriesController@store')->name('categories-store');
+    $router->put('actualizado/{category}', 'CategoriesController@update')->name('categories-update');
 });

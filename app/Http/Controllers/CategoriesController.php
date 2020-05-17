@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Redirector;
 
 use App\Classes\DataResponse;
 use App\Models\Categories;
@@ -29,7 +30,8 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        $category = [];
+        return view('categories.form', compact('category'));
     }
 
     /**
@@ -40,7 +42,16 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:100',
+            'type' => 'required'
+        ], [
+            'name.required' => 'El campo "Nombre" es requerido',
+            'name.max' => 'El campo "Nombre" es maximo 100 caracteres'
+        ]);
+        $cate = Categories::create($validatedData);
+
+        return redirect()->route('categories-edit', $cate->id)->with('success', 'Categoria creada');
     }
 
     /**
@@ -76,7 +87,13 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Categories::find($id);
+        if (!empty($category)) {
+            return view('categories.form', compact('category'));
+        } else {
+            return redirect()->route('categories-index');
+        }
+        
     }
 
     /**
@@ -88,7 +105,15 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:100'
+        ], [
+            'name.required' => 'El campo "Nombre" es requerido',
+            'name.max' => 'El campo "Nombre" es maximo 100 caracteres'
+        ]);
+        Categories::whereId($id)->update($validatedData);
+
+        return redirect()->route('categories-edit', $id)->with('success', 'Categoria actualizada');
     }
 
     /**

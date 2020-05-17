@@ -102,7 +102,10 @@ __webpack_require__(/*! ./pages/categories */ "./resources/js/pages/categories.j
   !*** ./resources/js/pages/categories.js ***!
   \******************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+var URLS = __webpack_require__(/*! ../urls */ "./resources/js/urls.js"); // Categories List
+
 
 if ($('#categories-list').length > 0) {
   $('#list').DataTable({
@@ -118,9 +121,38 @@ if ($('#categories-list').length > 0) {
       'data': 'name'
     }, {
       'data': 'type'
-    }]
+    }, {
+      'data': 'options',
+      'render': function render(data, type, row, meta) {
+        return "<div class=\"btn-group\">\n                            <a href=\"".concat(URLS.CATEGORY, "/editar/").concat(row.id, "\" class=\"btn btn-info\"><i class=\"right fas fa-edit\"></i></a>\n                            <a class=\"btn btn-danger\"><i class=\"right fas fa-trash\"></i></a>\n                        </div>");
+      }
+    }],
+    'language': {
+      'lengthMenu': 'Display _MENU_ records per page',
+      'zeroRecords': 'Nothing found - sorry',
+      'info': 'Showing page _PAGE_ of _PAGES_',
+      'infoEmpty': 'No records available',
+      'infoFiltered': '(filtered from _MAX_ total records)'
+    }
   });
-}
+} // Categories Edit
+
+
+if ($('#categories-edit').length > 0) {}
+
+/***/ }),
+
+/***/ "./resources/js/urls.js":
+/*!******************************!*\
+  !*** ./resources/js/urls.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var URLS = {
+  CATEGORY: 'categorias'
+};
+module.exports = URLS;
 
 /***/ }),
 
