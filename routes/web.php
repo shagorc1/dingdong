@@ -30,3 +30,23 @@ $router->group(['prefix' => 'categorias'], function($router) {
     $router->put('actualizado/{category}', 'CategoriesController@update')->name('categories-update');
     $router->get('eliminado/{id}', 'CategoriesController@destroy')->name('categories-delete');
 });
+
+$router->group(['prefix' => 'planes'], function($router) {
+    $router->get('', 'PlansController@index')->name('plans-index');
+    $router->get('editar/{id}', 'PlansController@edit')->name('plans-edit');
+    $router->get('nuevo', 'PlansController@create')->name('plans-create');
+    $router->get('paginado', 'PlansController@paginate')->name('plans-paginate');
+    $router->post('guardado', 'PlansController@store')->name('plans-store');
+    $router->put('actualizado/{plan}', 'PlansController@update')->name('plans-update');
+    $router->get('eliminado/{id}', 'PlansController@destroy')->name('plans-delete');
+});
+
+$router->group(['prefix' => 'negocios'], function($router) {
+    $router->get('', 'BusinessController@index')->name('business-index');
+    $router->get('editar/{id}', 'BusinessController@edit')->name('business-edit');
+    $router->get('nuevo', 'BusinessController@create')->name('business-create');
+    $router->get('paginado', 'BusinessController@paginate')->name('business-paginate');
+    $router->post('guardado', 'BusinessController@store')->name('business-store');
+    $router->put('actualizado/{category}', 'BusinessController@update')->name('business-update');
+    $router->get('eliminado/{id}', 'BusinessController@destroy')->name('business-delete');
+});
