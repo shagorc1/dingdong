@@ -1,6 +1,7 @@
 const URLS = {
     CATEGORY: 'categorias',
-    PLANS: 'planes'
+    PLANS: 'planes',
+    BUSINESS: 'negocios'
 }
 
 module.exports = URLS;

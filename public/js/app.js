@@ -97,6 +97,64 @@ __webpack_require__(/*! ./pages/categories */ "./resources/js/pages/categories.j
 
 __webpack_require__(/*! ./pages/plans */ "./resources/js/pages/plans.js");
 
+__webpack_require__(/*! ./pages/business */ "./resources/js/pages/business.js");
+
+/***/ }),
+
+/***/ "./resources/js/pages/business.js":
+/*!****************************************!*\
+  !*** ./resources/js/pages/business.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var URLS = __webpack_require__(/*! ../urls */ "./resources/js/urls.js"); // Business List
+
+
+if ($('#business-list').length > 0) {
+  // Business data table
+  $('#list').DataTable({
+    'processing': true,
+    'serverSide': true,
+    'ajax': {
+      'url': '/negocios/paginado',
+      'type': 'GET'
+    },
+    'columns': [{
+      'data': 'id'
+    }, {
+      'data': 'name'
+    }, {
+      'data': 'address'
+    }, {
+      'data': 'description'
+    }, {
+      'data': 'options',
+      'render': function render(data, type, row, meta) {
+        return "<div class=\"btn-group\">\n                            <a href=\"".concat(URLS.BUSINESS, "/editar/").concat(row.id, "\" class=\"btn btn-info\"><i class=\"right fas fa-edit\"></i></a>\n                            <a class=\"btn-delete btn btn-danger\" data-toggle=\"modal\" data-target=\"#myModal\" data-id=\"").concat(row.id, "\" data-name=\"").concat(row.name, "\"><i class=\"right fas fa-trash\"></i></a>\n                        </div>");
+      }
+    }],
+    'language': {
+      'lengthMenu': 'Display _MENU_ records per page',
+      'zeroRecords': 'Nothing found - sorry',
+      'info': 'Showing page _PAGE_ of _PAGES_',
+      'infoEmpty': 'No records available',
+      'infoFiltered': '(filtered from _MAX_ total records)'
+    }
+  }); // Button delete
+
+  $('#list').on('click', '.btn-delete', function (evt) {
+    var id = evt.currentTarget.getAttribute('data-id');
+    var name = evt.currentTarget.getAttribute('data-name');
+    var urlForm = "/".concat(URLS.PLANS, "/eliminado/").concat(id);
+    $('#businessName').html(name);
+    $('#delete-form').attr('action', urlForm);
+    $('#btn-submit-delete').click(function (e) {
+      $('#delete-form').submit();
+    });
+  });
+}
+
 /***/ }),
 
 /***/ "./resources/js/pages/categories.js":
@@ -218,7 +276,8 @@ if ($('#plans-list').length > 0) {
 
 var URLS = {
   CATEGORY: 'categorias',
-  PLANS: 'planes'
+  PLANS: 'planes',
+  BUSINESS: 'negocios'
 };
 module.exports = URLS;
 

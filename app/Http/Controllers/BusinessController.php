@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Redirector;
+
+use App\Classes\DataResponse;
+use App\Models\Companies;
+use App\Services\CompaniesService;
 
 class BusinessController extends Controller
 {
@@ -13,7 +20,7 @@ class BusinessController extends Controller
      */
     public function index()
     {
-        return view('categories.index');
+        return view('business.index');
     }
 
     /**
@@ -23,8 +30,8 @@ class BusinessController extends Controller
      */
     public function create()
     {
-        $category = [];
-        return view('categories.form', compact('category'));
+        $busines = [];
+        return view('business.form', compact('busines'));
     }
 
     /**
@@ -42,9 +49,9 @@ class BusinessController extends Controller
             'name.required' => 'El campo "Nombre" es requerido',
             'name.max' => 'El campo "Nombre" es maximo 100 caracteres'
         ]);
-        $cate = Categories::create($validatedData);
+        $busi = Companies::create($validatedData);
 
-        return redirect()->route('categories-edit', $cate->id)->with('success', 'Categoria creada');
+        return redirect()->route('business-edit', $busi->id)->with('success', 'Negocio creado');
     }
 
     /**
@@ -61,10 +68,10 @@ class BusinessController extends Controller
         $start = (int)$request->input('start');
         $search = $request->input('search')['value'];
         
-        $categories = CategoriesService::paginate($search);
-        $totalCount = (int)$categories->count();
+        $company = CompaniesService::paginate($search);
+        $totalCount = (int)$company->count();
         $dataResponse = new DataResponse();             
-        $dataResponse->data = $categories->offset($start)->limit($numberPerPage)->get();
+        $dataResponse->data = $company->offset($start)->limit($numberPerPage)->get();
         $dataResponse->recordsTotal = $totalCount;
         $dataResponse->draw = $draw;
         $dataResponse->recordsFiltered = $totalCount;
@@ -80,11 +87,11 @@ class BusinessController extends Controller
      */
     public function edit($id)
     {
-        $category = Categories::find($id);
-        if (!empty($category)) {
-            return view('categories.form', compact('category'));
+        $busines = Companies::find($id);
+        if (!empty($business)) {
+            return view('business.form', compact('busines'));
         } else {
-            return redirect()->route('categories-index');
+            return redirect()->route('business-index');
         }
         
     }
@@ -104,9 +111,9 @@ class BusinessController extends Controller
             'name.required' => 'El campo "Nombre" es requerido',
             'name.max' => 'El campo "Nombre" es maximo 100 caracteres'
         ]);
-        Categories::whereId($id)->update($validatedData);
+        Companies::whereId($id)->update($validatedData);
 
-        return redirect()->route('categories-edit', $id)->with('success', 'Categoria actualizada');
+        return redirect()->route('business-edit', $id)->with('success', 'Negocio actualizado');
     }
 
     /**
@@ -117,11 +124,11 @@ class BusinessController extends Controller
      */
     public function destroy($id)
     {
-        $cate = Categories::find($id);
-        $name = $cate->name;
-        $cate->active = 0;
-        $cate->save();
+        $busi = Companies::find($id);
+        $name = $busi->name;
+        $busi->active = 0;
+        $busi->save();
 
-        return redirect()->route('categories-index')->with('success', 'Categoria "' . $name . '" eliminada');
+        return redirect()->route('business-index')->with('success', 'Negocio "' . $name . '" eliminado');
     }
 }

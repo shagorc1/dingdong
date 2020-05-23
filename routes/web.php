@@ -47,6 +47,6 @@ $router->group(['prefix' => 'negocios'], function($router) {
     $router->get('nuevo', 'BusinessController@create')->name('business-create');
     $router->get('paginado', 'BusinessController@paginate')->name('business-paginate');
     $router->post('guardado', 'BusinessController@store')->name('business-store');
-    $router->put('actualizado/{category}', 'BusinessController@update')->name('business-update');
+    $router->put('actualizado/{busines}', 'BusinessController@update')->name('business-update');
     $router->get('eliminado/{id}', 'BusinessController@destroy')->name('business-delete');
 });
