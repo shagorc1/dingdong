@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="content uper" id="plans-edit">
+<div class="content uper" id="categories-edit">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Formulario @if ($plan) Editar @elseif (!$plan) Nueva @endif Plan</h3>
+                        <h3 class="card-title">Formulario @if ($clients) Editar @elseif (!$clients) Nuevo @endif Cliente</h3>
                     </div>
                     @if(session('success'))
                     <div class="alert alert-success alert-dismissible">
@@ -27,25 +27,25 @@
                         </ul>
                     </div><br />
                     @endif
-                     @if ($plan)
-                    <form method="post" action="{{ route('plans-update', $plan->id) }}">
+                        @if ($clients)
+                    <form method="post" action="{{ route('clients-update', $clients->id) }}">
                     @method('PUT')
-                    @elseif (!$plan)
-                    <form method="post" action="{{ route('plans-store') }}">
+                    @elseif (!$clients)
+                    <form method="post" action="{{ route('clients-store') }}">
                     @endif
-                        @csrf
+                    @csrf
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="InputName">Nombre</label>
-                                <input type="text" id="InputName" class="form-control @error('name') is-invalid @enderror" placeholder="Ingresa un nombre" name="name" @if ($plan) value="{{ $plan->name }}" @elseif ($request) value="{!! $request->old('name') !!}" @endif />
+                                <input type="text" id="InputName" class="form-control @error('name') is-invalid @enderror" placeholder="Ingresa un nombre" name="name"  @if ($clients) value="{{ $clients->name }}" @endif />
                             </div>
                             <div class="form-group">
-                                <label for="InputPrice">Precio</label>
-                                <input type="text" id="InputPrice" class="form-control @error('price') is-invalid @enderror" placeholder="Ingresa un precio" name="price"  @if ($plan) value="{{ $plan->price }}" @elseif ($request) value="{!! $request->old('price') !!}" @endif />
+                                <label for="InputLastName">Apellidos</label>
+                                <input type="text" id="InputLastName" class="form-control @error('lastname') is-invalid @enderror" placeholder="Ingrese apellidos" name="lastName"  @if ($clients) value="{{ $clients->lastName }}" @endif />
                             </div>
                             <div class="form-group">
-                                <label for="InputDescription">Descripcion</label>
-                                <input type="text" rows="5" id="InputDescription" class="form-control @error('description') is-invalid @enderror" placeholder="Ingresa una descripcion" name="description"  @if ($plan) value="{{ $plan->description }}" @elseif ($request) value="{!! $request->old('description') !!}" @endif />
+                                <label for="inputEmail">E-mail</label>
+                                <input type="text" id="inputEmail" class="form-control @error('email') is-invalid @enderror" placeholder="Ingrese un Email" name="email"  @if ($clients) value="{{ $clients->email }}" @endif />
                             </div>
                         </div>
                         <div class="card-footer">
@@ -57,5 +57,4 @@
         </div>
     </div>
 </div>
-
 @endsection

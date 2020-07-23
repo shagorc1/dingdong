@@ -45,3 +45,7 @@ if ($('#business-list').length > 0) {
         });
     });
 }
+// Bussiness Edit
+if ($('#business-edit').length > 0) {
+   
+}

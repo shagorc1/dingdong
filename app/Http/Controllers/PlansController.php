@@ -28,10 +28,10 @@ class PlansController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $plan = [];
-        return view('plans.form', compact('plan'));
+        return view('plans.form', compact(['plan', 'request']));
     }
 
     /**
@@ -53,6 +53,7 @@ class PlansController extends Controller
             'description.max' => 'El campo "Description" es maximo 300 caracteres',
             'price.required' => 'El campo "Price" es requerido',
         ]);
+        
         $plan = Plans::create($validatedData);
 
         return redirect()->route('plans-edit', $plan->id)->with('success', 'Plan creado');
@@ -89,11 +90,11 @@ class PlansController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $plan = Plans::find($id);
         if (!empty($plan)) {
-            return view('plans.form', compact('plan'));
+            return view('plans.form', compact(['plan', 'request']));
         } else {
             return redirect()->route('plans-index');
         }

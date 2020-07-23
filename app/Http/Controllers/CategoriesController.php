@@ -28,10 +28,11 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $category = [];
-        return view('categories.form', compact('category'));
+
+        return view('categories.form', compact(['category', 'request']));
     }
 
     /**
@@ -85,11 +86,11 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $category = Categories::find($id);
         if (!empty($category)) {
-            return view('categories.form', compact('category'));
+            return view('categories.form', compact(['category', 'request']));
         } else {
             return redirect()->route('categories-index');
         }

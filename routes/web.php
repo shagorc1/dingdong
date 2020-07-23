@@ -50,3 +50,13 @@ $router->group(['prefix' => 'negocios'], function($router) {
     $router->put('actualizado/{busines}', 'BusinessController@update')->name('business-update');
     $router->get('eliminado/{id}', 'BusinessController@destroy')->name('business-delete');
 });
+
+$router->group(['prefix' => 'clientes'], function($router) {
+    $router->get('', 'ClientsController@index')->name('clients-index');
+    $router->get('editar/{id}', 'ClientsController@edit')->name('clients-edit');
+    $router->get('nuevo', 'ClientsController@create')->name('clients-create');
+    $router->get('paginado', 'ClientsController@paginate')->name('clients-paginate');
+    $router->post('guardado', 'ClientsController@store')->name('clients-store');
+    $router->put('actualizado/{busines}', 'ClientsController@update')->name('clients-update');
+    $router->get('eliminado/{id}', 'ClientsController@destroy')->name('clients-delete');
+});

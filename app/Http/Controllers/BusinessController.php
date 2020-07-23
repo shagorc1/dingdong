@@ -6,9 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Hash;
 
 use App\Classes\DataResponse;
 use App\Models\Companies;
+use App\Models\Municipalities;
+use App\Models\Categories;
+use App\User;
 use App\Services\CompaniesService;
 
 class BusinessController extends Controller
@@ -28,10 +32,14 @@ class BusinessController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $busines = [];
-        return view('business.form', compact('busines'));
+        $user = [];
+        $categories = Categories::where('active', 1)->get();
+        $municipalities = Municipalities::where('active', 1)->get();
+
+        return view('business.form', compact(['busines', 'user', 'categories', 'municipalities', 'request']));
     }
 
     /**
@@ -42,16 +50,61 @@ class BusinessController extends Controller
      */
     public function store(Request $request)
     {
+        
         $validatedData = $request->validate([
             'name' => 'required|max:100',
-            'type' => 'required'
+            'description' => 'required',
+            'address' => 'required|max:200',
+            'geolocation' => 'required',
+            'username' => 'required|max:100',
+            'lastname' => 'required|max:100',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8|confirmed|max:15',
+            'phone' => 'required|max:20',
+            'municipality_id' => 'required',
+            'category_id' => 'required'
         ], [
             'name.required' => 'El campo "Nombre" es requerido',
-            'name.max' => 'El campo "Nombre" es maximo 100 caracteres'
+            'name.max' => 'El campo "Nombre" es maximo 100 caracteres',
+            'description.required' => 'El campo "Descripcion" es requerido',
+            'address.required' => 'El campo "Direccion" es requerido',
+            'address.max' => 'El campo "Direccion" debe tener maximo 200 caracteres',
+            'geolocation.required' => 'El campo "Geolocalizacion" es requerido',
+            'username.required' => 'El campo "Nombre Usuario" es requerido',
+            'username.max' => 'El campo "Nombre Usuario" es maximo 100 caracteres',
+            'lastname.required' => 'El campo "Apellidos" es requerido',
+            'lastname.max' => 'El campo "Apellidos" es maximo 100 caracteres',
+            'email.required' => 'El campo "E-amil" es requerido',
+            'email.email' => 'El campo "E-mail" tiene un correo invalido',
+            'email.unique' => 'Ya existe ese "E-mail" en los registros',
+            'password.min' => 'La contraseña debe de tener minimo 8 caracteres',
+            'password.max' => 'La contraseña debe de tener maximo 20 caracteres',
+            'password.confirmed' => 'La contraseña no coincide con "Repite-Contraseña"',
+            'phone.required' => 'El campo "Telefono" es requerido',
+            'phone.max' => 'El campo "Telefono" debe de tener maximo 20 caracteres'
         ]);
-        $busi = Companies::create($validatedData);
 
-        return redirect()->route('business-edit', $busi->id)->with('success', 'Negocio creado');
+        $user_data = [ 
+            'name' => $validatedData['username'], 
+            'last_name' => $validatedData['lastname'],
+            'email' => $validatedData['email'],
+            'telephone' => $validatedData['phone'],
+            'password' => Hash::make($validatedData['password']),
+            'role_id' => 2
+        ];
+
+            $user = User::create($user_data);
+            $validatedData['user_id'] = $user->id;
+            unset($validatedData['username']);
+            unset($validatedData['lastname']);
+            unset($validatedData['email']);
+            unset($validatedData['phone']);
+            unset($validatedData['password']);
+            unset($validatedData['password2']);
+    
+            $business = Companies::create($validatedData);
+            
+            return redirect()->route('business-edit', $business->id)->with('success', 'Negocio creado');
     }
 
     /**
@@ -85,11 +138,20 @@ class BusinessController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, request $request)
     {
         $busines = Companies::find($id);
-        if (!empty($business)) {
-            return view('business.form', compact('busines'));
+        $categories = Categories::where('active', 1)->get();
+        $municipalities = Municipalities::where('active', 1)->get();
+        if (!empty($busines)) {
+            $user_data = User::find($busines->user_id);
+            $user = [
+                'username' => $user_data->name,
+                'lastname' => $user_data->last_name,
+                'email' => $user_data->email,
+                'phone' => $user_data->telephone
+            ];
+            return view('business.form', compact(['busines', 'user', 'categories', 'municipalities', 'request']));
         } else {
             return redirect()->route('business-index');
         }
@@ -105,12 +167,60 @@ class BusinessController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user_id = $request->get('user_id');
+        $password = (!empty($request->get('password'))) ? 'sometimes|min:8|confirmed|max:15' : '';
         $validatedData = $request->validate([
-            'name' => 'required|max:100'
+            'name' => 'required|max:100',
+            'description' => 'required',
+            'address' => 'required|max:200',
+            'geolocation' => 'required',
+            'username' => 'required|max:100',
+            'lastname' => 'required|max:100',
+            'email' => 'required|unique:users,email,'  . $user_id,
+            'password' => $password,
+            'phone' => 'required|max:20',
+            'municipality_id' => 'required',
+            'category_id' => 'required'
         ], [
             'name.required' => 'El campo "Nombre" es requerido',
-            'name.max' => 'El campo "Nombre" es maximo 100 caracteres'
+            'name.max' => 'El campo "Nombre" es maximo 100 caracteres',
+            'description.required' => 'El campo "Descripcion" es requerido',
+            'address.required' => 'El campo "Direccion" es requerido',
+            'address.max' => 'El campo "Direccion" debe tener maximo 200 caracteres',
+            'geolocation.required' => 'El campo "Geolocalizacion" es requerido',
+            'username.required' => 'El campo "Nombre Usuario" es requerido',
+            'username.max' => 'El campo "Nombre Usuario" es maximo 100 caracteres',
+            'lastname.required' => 'El campo "Apellidos" es requerido',
+            'lastname.max' => 'El campo "Apellidos" es maximo 100 caracteres',
+            'email.email' => 'El campo "E-mail" tiene un correo invalido',
+            'email.unique' => 'Ya existe ese "E-mail" en los registros',
+            'password.min' => 'La contraseña debe de tener minimo 8 caracteres',
+            'password.max' => 'La contraseña debe de tener maximo 20 caracteres',
+            'password.confirmed' => 'La contraseña no coincide con "Repite-Contraseña"',
+            'phone.required' => 'El campo "Telefono" es requerido',
+            'phone.max' => 'El campo "Telefono" debe de tener maximo 20 caracteres'
         ]);
+
+        $user_data = [ 
+            'name' => $validatedData['username'], 
+            'last_name' => $validatedData['lastname'],
+            'email' => $validatedData['email'],
+            'telephone' => $validatedData['phone']
+        ];
+
+        if($password !== '') {
+            $user_data['password'] =  Hash::make($validatedData['password']);
+        }
+
+        $user = User::whereId($user_id)->update($user_data);
+        unset($validatedData['id']);
+        unset($validatedData['username']);
+        unset($validatedData['lastname']);
+        unset($validatedData['email']);
+        unset($validatedData['phone']);
+        unset($validatedData['password']);
+        unset($validatedData['password2']);
+
         Companies::whereId($id)->update($validatedData);
 
         return redirect()->route('business-edit', $id)->with('success', 'Negocio actualizado');

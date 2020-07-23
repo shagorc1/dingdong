@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Companies extends Model
 {
-    protected $fillable = ['name', 'address', 'geolocation', 'description'];
+    protected $fillable = ['name', 'address', 'geolocation', 'description', 'municipality_id', 'category_id', 'user_id'];
 
     public function category () {
         return $this->hasOne(Categories::class, 'id', 'category_id');

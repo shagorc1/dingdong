@@ -37,15 +37,15 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="InputName">Nombre</label>
-                                <input type="text" id="InputName" class="form-control @error('name') is-invalid @enderror" placeholder="Ingresa un nombre" name="name"  @if ($category) value="{{ $category->name }}" @endif />
+                                <input type="text" id="InputName" class="form-control @error('name') is-invalid @enderror" placeholder="Ingresa un nombre" name="name"  @if ($category) value="{{ $category->name }}" @elseif ($request) value="{!! $request->old('name') !!}" @endif />
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Tipo</label>
                                         <select name="type" class="form-control">
-                                            <option value="compania" @if ($category && $category->type == 'compania') selected @endif >Compañia</option>
-                                            <option value="producto" @if ($category && $category->type == 'producto') selected @endif>Producto</option>
+                                            <option value="compania" @if ($category && $category->type == 'compania') selected @elseif ($request && $request->old('type') == 'compania') selected @endif >Compañia</option>
+                                            <option value="producto" @if ($category && $category->type == 'producto') selected @elseif ($request && $request->old('type') == 'producto') selected @endif>Producto</option>
                                         </select>
                                     </div>
                                 </div>

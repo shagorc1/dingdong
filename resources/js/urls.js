@@ -1,7 +1,8 @@
 const URLS = {
     CATEGORY: 'categorias',
     PLANS: 'planes',
-    BUSINESS: 'negocios'
+    BUSINESS: 'negocios',
+    CLIENTS: 'clientes'
 }
 
 module.exports = URLS;

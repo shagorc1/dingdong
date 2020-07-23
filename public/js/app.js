@@ -153,7 +153,10 @@ if ($('#business-list').length > 0) {
       $('#delete-form').submit();
     });
   });
-}
+} // Bussiness Edit
+
+
+if ($('#business-edit').length > 0) {}
 
 /***/ }),
 
@@ -277,7 +280,8 @@ if ($('#plans-list').length > 0) {
 var URLS = {
   CATEGORY: 'categorias',
   PLANS: 'planes',
-  BUSINESS: 'negocios'
+  BUSINESS: 'negocios',
+  CLIENTS: 'clientes'
 };
 module.exports = URLS;
 
