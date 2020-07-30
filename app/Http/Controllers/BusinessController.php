@@ -80,6 +80,7 @@ class BusinessController extends Controller
             'password.min' => 'La contraseña debe de tener minimo 8 caracteres',
             'password.max' => 'La contraseña debe de tener maximo 20 caracteres',
             'password.confirmed' => 'La contraseña no coincide con "Repite-Contraseña"',
+            'password.required' => 'El campo "Contraseña" es requerida',
             'phone.required' => 'El campo "Telefono" es requerido',
             'phone.max' => 'El campo "Telefono" debe de tener maximo 20 caracteres'
         ]);
@@ -93,18 +94,18 @@ class BusinessController extends Controller
             'role_id' => 2
         ];
 
-            $user = User::create($user_data);
-            $validatedData['user_id'] = $user->id;
-            unset($validatedData['username']);
-            unset($validatedData['lastname']);
-            unset($validatedData['email']);
-            unset($validatedData['phone']);
-            unset($validatedData['password']);
-            unset($validatedData['password2']);
-    
-            $business = Companies::create($validatedData);
-            
-            return redirect()->route('business-edit', $business->id)->with('success', 'Negocio creado');
+        $user = User::create($user_data);
+        $validatedData['user_id'] = $user->id;
+        unset($validatedData['username']);
+        unset($validatedData['lastname']);
+        unset($validatedData['email']);
+        unset($validatedData['phone']);
+        unset($validatedData['password']);
+        unset($validatedData['password2']);
+
+        $business = Companies::create($validatedData);
+        
+        return redirect()->route('business-edit', $business->id)->with('success', 'Negocio creado');
     }
 
     /**

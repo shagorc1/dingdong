@@ -1,25 +1,26 @@
 const URLS = require('../urls');
 
-// Business List
-if ($('#business-list').length > 0) {
-    // Business data table
+// Clients List
+if ($('#clients-list').length > 0) {
+    // Clients data table
     $('#list').DataTable({
         'processing': true,
         'serverSide': true,
         'ajax': {
-            'url': '/negocios/paginado',
+            'url': '/clientes/paginado',
             'type': 'GET'
         },
         'columns': [
             { 'data': 'id' },
             { 'data': 'name' },
-            { 'data': 'address' },
-            { 'data': 'description' },
+            { 'data': 'last_name' },
+            { 'data': 'email' },
+            { 'data': 'telephone' },
             { 'data': 'options',
               'render': function(data, type, row, meta) {
                 return `<div class="btn-group">
-                            <a href="${URLS.BUSINESS}/editar/${row.id}" class="btn btn-info"><i class="right fas fa-edit"></i></a>
-                            <a class="btn-delete btn btn-danger" data-toggle="modal" data-target="#myModal" data-id="${row.id}" data-name="${row.name}"><i class="right fas fa-trash"></i></a>
+                            <a href="${URLS.CLIENTS}/editar/${row.id}" class="btn btn-info"><i class="right fas fa-edit"></i></a>
+                            <a class="btn-delete btn btn-danger" data-toggle="modal" data-target="#myModal" data-id="${row.id}" data-name="${row.name} ${row.last_name}"><i class="right fas fa-trash"></i></a>
                         </div>`;
               }
             }
@@ -36,9 +37,9 @@ if ($('#business-list').length > 0) {
     $('#list').on('click', '.btn-delete', function(evt) {
         let id = evt.currentTarget.getAttribute('data-id');
         let name = evt.currentTarget.getAttribute('data-name');
-        let urlForm = `/${URLS.BUSINESS}/eliminado/${id}`;
+        let urlForm = `/${URLS.CLIENTS}/eliminado/${id}`;
 
-        $('#businessName').html(name);
+        $('#clientName').html(name);
         $('#delete-form').attr('action', urlForm);
         $('#btn-submit-delete').click(function(e) {
             $('#delete-form').submit();
@@ -46,6 +47,6 @@ if ($('#business-list').length > 0) {
     });
 }
 // Bussiness Edit
-if ($('#business-edit').length > 0) {
+if ($('#clients-edit').length > 0) {
    
 }
